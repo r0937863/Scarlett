@@ -1,0 +1,40 @@
+---
+- name: Install and configure httpd
+  become: true
+  hosts: all
+  tasks:
+  - name: Install the HTTPD web server
+    yum:
+      name: httpd
+      state: present
+  - name: HTTPD starten
+    service:
+      name: httpd
+      enabled: true
+      state: started
+
+
+    - name: Pull httpd server image
+      docker_image:
+        name: httpd:latest
+
+    - name: Run httpd container
+      docker_container:
+        name: Scarlett
+        image: httpd:latest
+        ports:
+          - "80:80"
+
+    - name: Copy HTML code
+      copy:
+        src: /home/opc/index.html
+        dest: /var/www/html/index.html
+        mode: 0644
+
+    - name: Start httpd service
+      docker_container:
+        name: my_web_server
+        image: httpd:latest
+        ports:
+          - "80:80"
+        state: started

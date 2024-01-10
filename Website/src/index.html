@@ -1,0 +1,42 @@
+<!-- Just another exercise in JavaScript. This time it's a quiz about various topics. Enjoy! 
+
+Questions are randomized and at the end you'll get a short summery of your results. -->
+
+<header id="header">
+	<div class="logo">
+		<svg id="circle" xmlns="http://www.w3.org/2000/svg" version="1.1" height="100" width="100">
+			<circle cx="50" cy="50" r="50" fill="#c80815" />
+			<text x="25" y="70" fill="#ffffff" style="font-size: 60px;">Q</text>
+		</svg>
+	</div>
+	<div class="title">
+		<h1 class="site-title">Quiz <span class="small">Master</span></h1>
+	</div>
+	<div class="score">
+		<p id="score-counter">0</p>
+		<p class="points">Points</p>
+	</div>
+</header>
+
+<div id="content">
+	<div id="question-box"><p id="the-question"></p></div>
+	<div id="answer-box">
+		<ul>
+			<li class="answer">A: <span id="first-answer"></span></li>
+			<li class="answer">B: <span id="second-answer"></span></li>
+			<li class="answer">C: <span id="third-answer"></span></li>
+			<li class="answer">D: <span id="fourth-answer"></span></li>
+		</ul>
+	</div>
+</div>
+
+<div class="results-container">
+	<div class="results">
+		<h1>Congratulations!</h1>
+		<div class="result-text"><p>You've finished the quiz and the results are outstanding! Out of a total of <span id="num-total">0</span> questions, you've managed to answer <span id="num-correct">0</span> questions correctly, and you've only answered <span id="num-wrong">0</span> questions wrong!</div>
+	</div>
+</div>
+
+<footer id="footer">
+	<p>Just another excercise in JavaScript.</p>
+</footer>

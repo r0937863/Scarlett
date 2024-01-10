@@ -1,0 +1,92 @@
+---
+- name: This is a simple HTML project deploy using Ansible
+  hosts: 'ScarlettVM'
+  become: true
+  tasks:
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: latest
+
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+
+    - name: Enable Nginx
+      service:
+        name: nginx
+        enabled: yes
+
+    - name: Deploy webpage
+      copy:
+        src: /home/opc/quiz-master/dist/index.html
+        dest: /usr/share/nginx/html
+        mode: 0644
+
+    - name: add JS 
+      copy:
+        src: /home/opc/quiz-master/dist/script.js
+        dest: /usr/share/nginx/html
+        mode: 0644
+
+    - name: add CSS
+      copy:
+        src: /home/opc/quiz-master/dist/style.css
+        dest: /usr/share/nginx/html
+        mode: 0644
+
+    - name: Firewall rule for HTTP access to server
+      command: firewall-cmd --permanent --zone=public --add-service=http
+      notify: Restart firewall
+
+  handlers:
+    - name: Restart firewall
+      command: firewall-cmd --reload
+
+
+- name: Install Zabbix
+  hosts: monitor
+  become: yes
+  tasks:  
+    - name: activate tools
+      service:
+        name: "{{ item }}"
+        enabled: yes
+      loop: 
+        - nginx
+        - mysqld.service
+        - php-fpm
+        - docker
+
+    - name: start tools
+      service:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - nginx
+        - mysqld.service
+        - php-fpm
+        - docker
+
+    - name: firewall rule for HTTP access to server
+      command: firewall-cmd --permanent --zone=public --add-service=http
+
+    - name: Allow 8080 port
+      command: firewall-cmd --permanent --zone=public --add-port=8080/tcp
+
+    - name: Allow 10051 port
+      command: firewall-cmd --permanent --zone=public --add-port=10051/tcp
+      notify: restart firewall
+
+    - name: add GIT repository
+      command: git clone https://github.com/zabbix/zabbix-docker.git
+
+    - name: pull Zabbix containers
+      command: docker compose -f ./zabbix-docker/docker-compose_v3_centos_mysql_latest.yaml up
+    
+  handlers:
+    - name: restart firewall
+      service:
+        name: firewalld
+        state: restarted
