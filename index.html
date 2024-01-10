@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--get, laat zien in url wat je ingeeft/ post verbergt dit in de url achter de method-->
+    <!--form geeft het begin en einde van je formulier aan, ertussen kan je invoervelden zetten zoals tekstvakken en ckackboxes
+    input tag word gebruikt voor tekst file nummer passwoorder
+elk inputveld heeft het attribuut name nodig
+tm-statweb.be is alleen maar om de "zak" te kunnen gebruiken
+-->
+    <form action="https://tm-statweb.be/forms.php" method="post">
+        <div>
+            <label for="username">username</label>
+            <input type="email" name="username" id="username" value="vincent@mail.com" required>
+            <!--zet hierboven automatisch het email adres al voor iemand-->
+        </div>
+        <div>   
+            <label for="password">password</label>
+            <input type="password" name="password" id="password" placeholder="Voer je wachtwoord in" required disabled>
+        </div>        <div>
+            <label for="dag">Wat dag is het?</label>
+            <select name="dag" id="dag">
+                <option value="maandag">MAAANDAG</option>
+                <option value="dinsdag">DINSDQG</option>
+            </select>
+        </div>
+        <div>
+            <label for="voorwaarden">check onze service</label>
+            <input type="checkbox" name="voorwaarden" id="voorwaarden" value="akkoord">
+        </div>
+        <div>
+            <label for="male">Man</label>
+            <input type="radio" name="gender" id="male" value="male">
+            <label for="female">vrouw</label>
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="other">ander</label>
+            <input type="radio" name="gender" id="other" value="other">
+        </div>
+        <div>
+            <label for="reacttie">reactie</label>
+            <textarea name="reactie" id="reactie" rows="5">dit is wat er in de text area komt</textarea>
+        </div>
+        <!--de for achter label en achter name eronder moeten hetzelfste zijn-->
+        <input type="submit" value="Verzenden">
+        <!--submit niet vergeten, men kan meerdere forms maken op 1 pagina , Dit is hoe ge formulieren moet maken op html-->
+    </form>
+</body>
+</html>
